@@ -22,6 +22,7 @@ const LoginPage = () => {
         } else {
             setSuccess('Logged in successfully'); // Show success message
             localStorage.setItem('token', response.token); // Save token
+            navigate('/home');
         }
     };
 

@@ -1,15 +1,16 @@
 const API_URL = process.env.REACT_APP_API_URL;
 
-export const register = async (email, password) => {
+export const register = async (email, password, firstName, lastName) => {
     try {
         const response = await fetch(`${API_URL}/auth/register`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password }),
+            body: JSON.stringify({ email, password, firstName, lastName }),
         });
 
         if (!response.ok) {
             const errorData = await response.json();
+            // Handle specific error messages
             throw new Error(errorData.error || 'Something went wrong during registration.');
         }
 
@@ -30,6 +31,7 @@ export const login = async (email, password) => {
 
         if (!response.ok) {
             const errorData = await response.json();
+            // Handle specific error messages
             throw new Error(errorData.error || 'Something went wrong during login.');
         }
 
