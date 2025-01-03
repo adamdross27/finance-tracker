@@ -42,6 +42,13 @@ const RegisterPage = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
+                <input
+                    className="register-input"
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
                 <div className="button-group">
                     <button className="register-button" type="submit">Register</button>
                     <button
