@@ -1,9 +1,22 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 
 const Home = () => {
-  return (
-    <div>Home</div>
-  )
-}
+  const [firstName, setFirstName] = useState('');
 
-export default Home
+  useEffect(() => {
+    // Assuming the firstName is stored in localStorage after registration/login
+    const storedFirstName = localStorage.getItem('firstName');
+    if (storedFirstName) {
+      setFirstName(storedFirstName);
+    }
+  }, []);
+
+  return (
+    <div className="home-page">
+      <h1>Welcome, {firstName || 'Guest'}!</h1>
+      <p>You're successfully logged in.</p>
+    </div>
+  );
+};
+
+export default Home;
