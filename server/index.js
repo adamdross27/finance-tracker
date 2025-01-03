@@ -15,10 +15,12 @@ app.get('/', (req, res) => {
 });
 
 // Import routes (auth routes)
-const authRoutes = require('./src/routes/auth');  // Ensure path is correct
+const authRoutes = require('./src/routes/auth');
+const userRoutes = require('./src/routes/userRoutes'); // User routes for fetching user details
 
 // Use routes for API
 app.use('/api/auth', authRoutes);
+app.use('/api/user', userRoutes); // Ensure the route is '/user/details'
 
 // Start the server
 app.listen(5001, () => {

@@ -18,13 +18,15 @@ const LoginPage = () => {
         
         if (response.error) {
             setError(response.error);
-            setSuccess(''); // Clear success message if error occurs
+            setSuccess('');
         } else {
-            setSuccess('Logged in successfully'); // Show success message
+            setSuccess('Logged in successfully');
             localStorage.setItem('token', response.token); // Save token
+            localStorage.setItem('firstName', response.firstName); // Save firstName
             navigate('/home');
         }
     };
+    
 
     return (
         <div className="login-page">
