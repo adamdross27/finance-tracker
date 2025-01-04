@@ -16,7 +16,7 @@ const Navbar = () => {
 
   return (
     <nav className="navbar">
-      <div className="navbar-logo">Finance Tracker</div>
+      <div className="navbar-logo"></div>
       <ul className="navbar-links">
         {!isAuthenticated && (
           <>

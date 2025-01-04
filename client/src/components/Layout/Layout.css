@@ -13,20 +13,20 @@ body {
 }
 
 .layout-header {
-    background-image: linear-gradient(to bottom right, #41cc99, #369c39); /* Gradient from light green to dark green */
+    background-image: linear-gradient(to bottom right, #a8e063, #4caf50); /* Gradient from light green to dark green */
     color: white;
     padding: 15px 20px; /* Reduced padding for a smaller header */
     text-align: center;
     font-size: 1.5rem; /* Reduced font size */
     font-weight: bold;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow below header */
+    position: relative; /* To position the icon */
 }
-
 
 .layout-content {
     flex: 1;
     padding: 1.5rem; /* Reduced padding for content area */
-    background-color: rgb(0, 0, 0);
+    background-color: #cfcfbb;
     border-radius: 8px; /* Rounded corners for content area */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for content */
     font-size: 1rem;
@@ -62,4 +62,12 @@ h1, h2, h3, h4, h5, h6 {
 p {
     margin: 0.5rem 0;
     color: #ffffff;
+}
+
+.header-icon {
+    position: absolute;
+    top: 50%;
+    left: 20px; /* Space from the left edge */
+    transform: translateY(-50%); /* Vertically center the icon */
+    height: 60px; /* Adjust the icon size */
 }
