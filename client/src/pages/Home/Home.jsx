@@ -4,51 +4,59 @@ import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const [firstName, setFirstName] = useState('');
-  const [error, setError] = useState('');
+  const [authError, setAuthError] = useState(false); // State to handle redirection logic
   const navigate = useNavigate();
 
   const logOut = () => {
-    // Clear the localStorage or any other session data
     localStorage.removeItem('firstName');
     localStorage.removeItem('token'); // Assuming the token is stored in localStorage
-
-    // Redirect the user to the login page
     navigate('/login');
   };
 
   useEffect(() => {
     const fetchUserData = async () => {
-        const token = localStorage.getItem('token'); // Correct token key
-        if (!token) {
-            setError('No token found. Please log in again.');
-            return;
+      const token = localStorage.getItem('token');
+
+      if (!token) {
+        // Missing token
+        setAuthError(true); // Trigger error handling
+        return;
+      }
+
+      try {
+        const response = await getUserDetails(token);
+
+        if (response.error) {
+          // API returned an error
+          setAuthError(true); // Trigger error handling
+        } else {
+          // Successfully fetched user data
+          setFirstName(response.firstName);
+          localStorage.setItem('firstName', response.firstName);
         }
-    
-        try {
-            const response = await getUserDetails(token);
-            if (response.error) {
-                setError(response.error);
-            } else {
-                setFirstName(response.firstName); // Update state with first name
-                localStorage.setItem('firstName', response.firstName); // Save first name in localStorage
-            }
-        } catch (error) {
-            setError('An error occurred while fetching user data.');
-        }
+      } catch (error) {
+        // Unexpected fetch error
+        setAuthError(true); // Trigger error handling
+      }
     };
-  
+
     fetchUserData();
-}, []);
+  }, []);
 
+  useEffect(() => {
+    if (authError) {
+      // Handle the alert and redirection in a single place
+      alert('No authorization token found or session expired. Please log in again.');
+      navigate('/login', { replace: true });
+    }
+  }, [authError, navigate]);
 
-return (
+  return (
     <div className="home-page">
-      {error && <p className="error-message">{error}</p>}
       <h1>Welcome, {firstName || localStorage.getItem('firstName') || 'Guest'}!</h1>
       <button onClick={logOut}>Log Out</button>
     </div>
-);
-
+  );
 };
 
 export default Home;
