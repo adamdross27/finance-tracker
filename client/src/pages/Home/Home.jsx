@@ -7,12 +7,6 @@ const Home = () => {
   const [authError, setAuthError] = useState(false); // State to handle redirection logic
   const navigate = useNavigate();
 
-  const logOut = () => {
-    localStorage.removeItem('firstName');
-    localStorage.removeItem('token'); // Assuming the token is stored in localStorage
-    navigate('/login');
-  };
-
   useEffect(() => {
     const fetchUserData = async () => {
       const token = localStorage.getItem('token');
@@ -54,7 +48,6 @@ const Home = () => {
   return (
     <div className="home-page">
       <h1>Welcome, {firstName || localStorage.getItem('firstName') || 'Guest'}!</h1>
-      <button onClick={logOut}>Log Out</button>
     </div>
   );
 };

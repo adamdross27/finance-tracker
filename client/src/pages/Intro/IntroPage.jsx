@@ -1,14 +1,15 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './IntroPage.css';
+import logo from '../../assets/logo.png';  // Import the logo image
 
 const IntroPage = () => {
     const navigate = useNavigate();
 
     return (
         <div className="intro-page">
-            <h1>Welcome to Finance Tracker</h1>
-            <p>Your personal tool for managing expenses efficiently.</p>
+            <img src={logo} alt="Finance Tracker Logo" className="intro-logo" />  {/* Add the image with a class */}
+            <h3>Your personal tool for managing expenses efficiently.</h3>
             <button onClick={() => navigate('/login')}>Login</button>
             <button onClick={() => navigate('/register')}>Register</button>
         </div>

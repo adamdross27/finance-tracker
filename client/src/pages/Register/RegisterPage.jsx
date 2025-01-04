@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { register } from '../../api/auth';
 import './RegisterPage.css';
+import AuthContext from '../../context/AuthContext';
 
 const RegisterPage = () => {
     const [email, setEmail] = useState('');
@@ -11,31 +12,24 @@ const RegisterPage = () => {
     const [lastName, setLastName] = useState('');
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
-    const navigate = useNavigate(); // Hook for navigation
+    const navigate = useNavigate();
+    const { logIn } = useContext(AuthContext); // Use context for authentication
 
-    // Validate input fields
     const validateFields = () => {
         if (!firstName || !lastName || !email || !password || !confirmPassword) {
             return 'Please fill out all fields.';
         }
-
-        // Validate email format
         const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
         if (!emailRegex.test(email)) {
             return 'Please enter a valid email address.';
         }
-
-        // Check if passwords match
         if (password !== confirmPassword) {
             return 'Passwords do not match.';
         }
-
-        // Check password length
         if (password.length < 6) {
             return 'Password must be at least 6 characters long.';
         }
-
-        return null; // Return null if no error
+        return null;
     };
 
     const handleSubmit = async (e) => {
@@ -45,10 +39,9 @@ const RegisterPage = () => {
         if (validationError) {
             setError(validationError);
             setSuccess('');
-            return; // Stop the form submission if there's a validation error
+            return;
         }
-    
-        // Now include firstName and lastName in the API call
+
         const response = await register(email, password, firstName, lastName);
         if (response.error) {
             setError(response.error);
@@ -56,10 +49,10 @@ const RegisterPage = () => {
         } else {
             setSuccess('Registration successful!');
             setError('');
+            logIn(response.token); // Update the global authentication state
             navigate('/home');
         }
     };
-    
 
     return (
         <div className="register-page">
@@ -107,7 +100,7 @@ const RegisterPage = () => {
                     <button
                         className="back-button"
                         type="button"
-                        onClick={() => navigate('/')} // Navigate to the Intro page
+                        onClick={() => navigate('/')}
                     >
                         Back
                     </button>

@@ -1,12 +1,13 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
+import Navbar from '../Navbar/Navbar'; // Import the Navbar
 import './Layout.css';
 
 const Layout = () => {
     return (
         <div className="layout">
             <header className="layout-header">
-                <h1>Finance Tracker</h1>
+                <Navbar /> {/* Add Navbar here */}
             </header>
             <main className="layout-content">
                 <Outlet />
