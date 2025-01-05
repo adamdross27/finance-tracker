@@ -13,7 +13,7 @@ body {
 }
 
 .layout-header {
-    background-image: linear-gradient(to bottom right, #a8e063, #4caf50); /* Gradient from light green to dark green */
+    background-image: linear-gradient(to top left, #009c1a, #009c1a); /* Gradient from light green to dark green */
     color: white;
     padding: 15px 20px; /* Reduced padding for a smaller header */
     text-align: center;
@@ -26,7 +26,7 @@ body {
 .layout-content {
     flex: 1;
     padding: 1.5rem; /* Reduced padding for content area */
-    background-color: #cfcfbb;
+    background-color: #c9c8c7;
     border-radius: 8px; /* Rounded corners for content area */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for content */
     font-size: 1rem;

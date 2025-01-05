@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const [firstName, setFirstName] = useState('');
-  const [authError, setAuthError] = useState(false); // State to handle redirection logic
+  const [authError, setAuthError] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -12,8 +12,7 @@ const Home = () => {
       const token = localStorage.getItem('token');
 
       if (!token) {
-        // Missing token
-        setAuthError(true); // Trigger error handling
+        setAuthError(true); // Missing token
         return;
       }
 
@@ -21,16 +20,14 @@ const Home = () => {
         const response = await getUserDetails(token);
 
         if (response.error) {
-          // API returned an error
-          setAuthError(true); // Trigger error handling
+          setAuthError(true); // API returned an error
         } else {
-          // Successfully fetched user data
           setFirstName(response.firstName);
           localStorage.setItem('firstName', response.firstName);
         }
       } catch (error) {
-        // Unexpected fetch error
-        setAuthError(true); // Trigger error handling
+        setAuthError(true); // Unexpected fetch error
+        console.error('Fetch error:', error);
       }
     };
 
@@ -39,7 +36,6 @@ const Home = () => {
 
   useEffect(() => {
     if (authError) {
-      // Handle the alert and redirection in a single place
       alert('No authorization token found or session expired. Please log in again.');
       navigate('/login', { replace: true });
     }

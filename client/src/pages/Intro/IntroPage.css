@@ -16,7 +16,7 @@
 
 .intro-logo {
     max-width: 100%;
-    width: 750px; /* You can adjust this to make the logo bigger or smaller */
+    width: 250px; /* You can adjust this to make the logo bigger or smaller */
     height: auto;
     margin-bottom: 10px; /* Space between the logo and the text */
 }
@@ -45,4 +45,8 @@
 .intro-page button:active {
     background-color: #3e8e41;
     transform: scale(0.95);
+}
+
+h1, p, h3 {
+    color: black;
 }
