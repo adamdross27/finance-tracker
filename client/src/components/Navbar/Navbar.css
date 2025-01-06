@@ -31,13 +31,14 @@
 
 .navbar-links a {
   display: block;
-  padding: 12px 15px; /* Adjusted padding for better alignment */
+  padding: 10px 10px; /* Adjusted padding for better alignment */
   text-decoration: none;
   color: white;
   font-weight: 500;
   text-align: center;
   border-radius: 10px;
   transition: background-color 0.3s ease, transform 0.2s ease;
+  font-size: 20px;
 }
 
 .navbar-links a:hover {

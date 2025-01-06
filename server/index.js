@@ -14,13 +14,19 @@ app.get('/', (req, res) => {
     res.send('Backend is working!');
 });
 
-// Import routes (auth routes)
+// Import routes (auth routes, user routes, expense routes)
 const authRoutes = require('./src/routes/auth');
 const userRoutes = require('./src/routes/userRoutes'); // User routes for fetching user details
+const expenseRoutes = require('./src/routes/addExpenseRoute'); // Import expense routes
+const categoryRoutes = require('./src/routes/categoryRoutes');  // Import category routes
+
 
 // Use routes for API
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes); // Ensure the route is '/user/details'
+app.use('/api/expenses', expenseRoutes);  // Add this line to use expense routes
+app.use('/api/categories', categoryRoutes);  // Use the category route
+
 
 // Start the server
 app.listen(5001, () => {
