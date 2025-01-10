@@ -78,33 +78,39 @@ const AddExpense = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Check if the user is authenticated
     if (!isAuthenticated) {
-      alert('You must be logged in to add an expense');
-      return;
+        alert('You must be logged in to add an expense');
+        return;
     }
 
-    // Get token from localStorage (or wherever it is stored)
     const token = localStorage.getItem('token');
 
-    // Call the addExpense function to send data to the API
-    const response = await addExpense(formData, token);
+    // Prepare data for backend
+    const preparedData = {
+        ...formData,
+        payment_method: formData.paymentMethod, // Map to backend's expected field
+    };
+
+    delete preparedData.paymentMethod; // Remove the unused field
+
+    const response = await addExpense(preparedData, token);
 
     if (response.error) {
-      alert(`Error: ${response.error}`);
+        alert(`Error: ${response.error}`);
     } else {
-      alert('Expense added successfully!');
-      setFormData({
-        title: '',
-        amount: '',
-        description: '',
-        category_id: '',
-        date: '',
-        paymentMethod: 'Cash',
-        isRecurring: false,
-      });
+        alert('Expense added successfully!');
+        setFormData({
+            title: '',
+            amount: '',
+            description: '',
+            category_id: '',
+            date: '',
+            paymentMethod: 'Cash',
+            isRecurring: false,
+        });
     }
-  };
+};
+
 
   return (
     <div className="add-expense">
@@ -198,17 +204,6 @@ const AddExpense = () => {
             </select>
           )}
         </label>
-
-        <label>
-          Recurring:
-          <input
-            type="checkbox"
-            name="isRecurring"
-            checked={formData.isRecurring}
-            onChange={handleChange}
-          />
-        </label>
-
         <button type="submit">Add Expense</button>
       </form>
     </div>
