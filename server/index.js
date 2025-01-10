@@ -22,10 +22,7 @@ const userRoutes = require('./src/routes/userRoutes'); // User routes for fetchi
 const expenseRoutes = require('./src/routes/addExpenseRoute'); // Import expense routes
 const categoryRoutes = require('./src/routes/categoryRoutes');  // Import category routes
 const paymentMethodRoutes = require('./src/routes/paymentMethodRoutes');
-
-
-console.log('PaymentMethod Routes:', paymentMethodRoutes);  // Log the imported routes
-
+const viewExpensesRoutes = require('./src/routes/viewExpensesRoute');
 
 // Use routes for API
 app.use('/api/auth', authRoutes);
@@ -33,8 +30,12 @@ app.use('/api/user', userRoutes); // Ensure the route is '/user/details'
 app.use('/api/expenses', expenseRoutes);  // Add this line to use expense routes
 app.use('/api/categories', categoryRoutes);  // Use the category route
 app.use('/api/', paymentMethodRoutes);
+app.use('/api', viewExpensesRoutes);
+
 
 // Start the server
 app.listen(5001, () => {
     console.log('Server is running on http://localhost:5001');
 });
+
+

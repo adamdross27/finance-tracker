@@ -15,7 +15,7 @@ const authenticateToken = (req, res, next) => {
         console.log('Token verification failed:', err.message);
         return res.status(403).json({ message: 'Invalid token' });
       }
-      console.log('Token verified:', user);
+     // console.log('Token verified:', user);
       req.user = user;
       next();
     });
