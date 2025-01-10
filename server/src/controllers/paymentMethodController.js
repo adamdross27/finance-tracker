@@ -91,4 +91,27 @@ exports.togglePaymentMethod = async (req, res) => {
     }
 };
 
+// src/controllers/paymentMethodController.js
+
+exports.getActivePaymentMethods = async (req, res) => {
+  const user_id = req.user.id; // Assuming user ID is retrieved from the auth middleware
+
+  try {
+    const [rows] = await db.execute(
+      'SELECT id, type FROM payment_method WHERE user_id = ? AND isActive = 1',
+      [user_id]
+    );
+
+    if (rows.length === 0) {
+      return res.status(404).json({ error: 'No active payment methods found.' });
+    }
+
+    res.status(200).json(rows); // Return the active payment methods
+  } catch (error) {
+    console.error('Error fetching payment methods:', error);
+    res.status(500).json({ error: 'Failed to fetch payment methods.' });
+  }
+};
+
+
   

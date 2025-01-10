@@ -1,22 +1,24 @@
 import React, { useState, useEffect, useContext } from 'react';
 import './AddExpense.css';
 import { addExpense } from '../../api/addExpense'; // Import the addExpense function
-import AuthContext from '../../context/AuthContext';  // Import the AuthContext
+import AuthContext from '../../context/AuthContext'; // Import the AuthContext
 
 const AddExpense = () => {
-  const { isAuthenticated } = useContext(AuthContext);  // Access the authentication state
+  const { isAuthenticated } = useContext(AuthContext); // Access the authentication state
   const [categories, setCategories] = useState([]); // State for category options
+  const [paymentMethods, setPaymentMethods] = useState([]); // State for payment methods
   const [formData, setFormData] = useState({
     title: '',
     amount: '',
     description: '',
-    category_id: '',  // Matches the database field
+    category_id: '', // Matches the database field
     date: '',
     paymentMethod: 'Cash',
     isRecurring: false,
   });
-  const [loading, setLoading] = useState(true); // Loading state for category fetch
-  const [error, setError] = useState(null); // Error state for category fetch
+  const [loadingCategories, setLoadingCategories] = useState(true); // Loading state for category fetch
+  const [loadingMethods, setLoadingMethods] = useState(true); // Loading state for payment methods fetch
+  const [error, setError] = useState(null); // Error state for API fetches
 
   // Fetch categories from backend
   useEffect(() => {
@@ -28,14 +30,39 @@ const AddExpense = () => {
         }
         const data = await response.json();
         setCategories(data);
-        setLoading(false);
       } catch (err) {
         setError(err.message);
-        setLoading(false);
+      } finally {
+        setLoadingCategories(false);
       }
     };
 
     fetchCategories();
+  }, []);
+
+  // Fetch payment methods from backend
+  useEffect(() => {
+    const fetchPaymentMethods = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await fetch('http://localhost:5001/api/paymentMethods', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch payment methods');
+        }
+
+        const data = await response.json();
+        setPaymentMethods(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoadingMethods(false);
+      }
+    };
+
+    fetchPaymentMethods();
   }, []);
 
   // Handle input changes
@@ -117,7 +144,7 @@ const AddExpense = () => {
 
         <label>
           Category:
-          {loading ? (
+          {loadingCategories ? (
             <p>Loading categories...</p>
           ) : error ? (
             <p>Error loading categories: {error}</p>
@@ -151,15 +178,25 @@ const AddExpense = () => {
 
         <label>
           Payment Method:
-          <select
-            name="paymentMethod"
-            value={formData.paymentMethod}
-            onChange={handleChange}
-          >
-            <option value="Cash">Cash</option>
-            <option value="Card">Card</option>
-            <option value="Other">Other</option>
-          </select>
+          {loadingMethods ? (
+            <p>Loading payment methods...</p>
+          ) : error ? (
+            <p>Error loading payment methods: {error}</p>
+          ) : (
+            <select
+              name="paymentMethod"
+              value={formData.paymentMethod}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select a payment method</option>
+              {paymentMethods.map((method) => (
+                <option key={method.id} value={method.type}>
+                  {method.type}
+                </option>
+              ))}
+            </select>
+          )}
         </label>
 
         <label>

@@ -28,3 +28,25 @@ export const addExpense = async (expenseData, token) => {
     return { error: error.message || 'An unexpected error occurred.' };
   }
 };
+
+export const addPaymentMethod = async (paymentMethod, token) => {
+  try {
+    const response = await fetch(`${API_URL}/paymentMethods`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify(paymentMethod),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to add payment method.');
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error adding payment method:', error);
+    return { error: error.message || 'An unexpected error occurred.' };
+  }
+};

@@ -79,4 +79,3 @@ export const togglePaymentMethod = async (id, isActive, token) => {
     }
   };
   
-  

@@ -7,6 +7,8 @@ router.get('/paymentMethods', authenticateToken, paymentMethodController.getPaym
 router.post('/paymentMethods', authenticateToken, paymentMethodController.addPaymentMethod);
 router.patch('/paymentMethods/:id', authenticateToken, paymentMethodController.updatePaymentMethod);
 router.patch('/paymentMethods/:id/toggle', paymentMethodController.togglePaymentMethod);
+router.get('/paymentMethods', authenticateToken, paymentMethodController.getActivePaymentMethods);
+
 
 
 module.exports = router;
