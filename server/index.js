@@ -16,21 +16,22 @@ app.get('/', (req, res) => {
     res.send('Backend is working!');
 });
 
-// Import routes (auth routes, user routes, expense routes, and payment method routes)
+// Import the routes
 const authRoutes = require('./src/routes/auth');
-const userRoutes = require('./src/routes/userRoutes'); // User routes for fetching user details
-const expenseRoutes = require('./src/routes/addExpenseRoute'); // Import expense routes
-const categoryRoutes = require('./src/routes/categoryRoutes');  // Import category routes
+const userRoutes = require('./src/routes/userRoutes'); 
+const expenseRoutes = require('./src/routes/editExpenseRoute');  // Correctly importing the file with search route
+const categoryRoutes = require('./src/routes/categoryRoutes');  
 const paymentMethodRoutes = require('./src/routes/paymentMethodRoutes');
 const viewExpensesRoutes = require('./src/routes/viewExpensesRoute');
 
-// Use routes for API
+// Use the routes for API
 app.use('/api/auth', authRoutes);
-app.use('/api/user', userRoutes); // Ensure the route is '/user/details'
-app.use('/api/expenses', expenseRoutes);  // Add this line to use expense routes
-app.use('/api/categories', categoryRoutes);  // Use the category route
-app.use('/api/', paymentMethodRoutes);
-app.use('/api', viewExpensesRoutes);
+app.use('/api/user', userRoutes); 
+app.use('/api/expenses', expenseRoutes);  // Correctly using the expense routes for '/api/expenses'
+app.use('/api/categories', categoryRoutes);  
+app.use('/api', paymentMethodRoutes);
+app.use('/api', viewExpensesRoutes);  // This is for view-related routes, like getting all expenses
+
 
 
 // Start the server
