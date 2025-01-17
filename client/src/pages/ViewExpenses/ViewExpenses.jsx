@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useCallback } from 'react';
 import AuthContext from '../../context/AuthContext'; // Ensure AuthContext is correctly imported
 import { fetchExpenses } from '../../api/viewExpenses';
 import './ViewExpenses.css';
@@ -28,17 +28,9 @@ const ViewExpenses = () => {
 
     setStartDate(lastMonth.toISOString().split('T')[0]);
     setEndDate(today.toISOString().split('T')[0]);
-
   }, []);
 
-  useEffect(() => {
-    // When startDate or endDate changes, trigger the fetch
-    if (startDate && endDate) {
-      handleShowExpenses();
-    }
-  }, [startDate, endDate]);
-
-  const handleShowExpenses = async () => {
+  const handleShowExpenses = useCallback(async () => {
     if (!isAuthenticated) {
       setError('You must be logged in to view expenses');
       setLoading(false);
@@ -60,7 +52,14 @@ const ViewExpenses = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [isAuthenticated, startDate, endDate]);
+
+  useEffect(() => {
+    // When startDate or endDate changes, trigger the fetch
+    if (startDate && endDate) {
+      handleShowExpenses();
+    }
+  }, [startDate, endDate, handleShowExpenses]);
 
   const handlePresetRange = (range) => {
     const today = new Date();
