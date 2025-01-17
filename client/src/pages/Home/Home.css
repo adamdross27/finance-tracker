@@ -1,0 +1,126 @@
+/* Global Styles */
+body {
+    background-color: #FFF5EE; /* Soft and welcoming background */
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  h1, h2, h3 {
+    color: #333; /* Black color for text */
+    text-align: center;
+  }
+  
+  /* Home Page Container */
+  .home-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #000000; /* Bright green for the welcome message */
+    font-weight: bold;
+  }
+  
+  /* Stats Section */
+  .stats {
+    background: #f7f7f7; /* Light gray background for the stats section */
+    border-radius: 10px;
+    width: 80%;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .stats h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .stats ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  
+  .stats li {
+    font-size: 1.2rem;
+    padding: 8px 0;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .stats li:last-child {
+    border-bottom: none;
+  }
+  
+  .stats li strong {
+    font-weight: bold;
+  }
+  
+  /* Expense Summary Section */
+  .expense-summary {
+    background-color: #ffffff; /* White background for the expense summary */
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+  }
+  
+  .expense-summary h3 {
+    font-size: 1.8rem;
+    color: #333;
+  }
+  
+  .expense-summary ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  
+  .expense-summary li {
+    font-size: 1.1rem;
+    padding: 8px 0;
+    color: #555;
+  }
+  
+  .expense-summary li:last-child {
+    border-bottom: none;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .home-page {
+      padding: 15px;
+    }
+  
+    .stats {
+      width: 100%;
+    }
+  
+    .stats h2 {
+      font-size: 1.8rem;
+    }
+  
+    h1 {
+      font-size: 2rem;
+    }
+  }
+  
+  /* Animations */
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .home-page {
+    animation: fadeIn 1s ease-out;
+  }
+  
