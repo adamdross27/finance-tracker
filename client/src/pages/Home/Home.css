@@ -1,126 +1,132 @@
-/* Global Styles */
-body {
-    background-color: #FFF5EE; /* Soft and welcoming background */
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-  }
-  
-  h1, h2, h3 {
-    color: #333; /* Black color for text */
-    text-align: center;
-  }
-  
-  /* Home Page Container */
-  .home-page {
+/* General page styles */
+.home-page {
+    background-color: #FFF5EE; /* Light background for the page */
+    font-family: 'Roboto', sans-serif; /* Cleaner, modern font */
+    padding: 20px;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: center; /* Center the card */
+}
+
+.card {
+    background-color: white; /* White background for the card */
     padding: 20px;
-  }
-  
-  h1 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-    color: #000000; /* Bright green for the welcome message */
-    font-weight: bold;
-  }
-  
-  /* Stats Section */
-  .stats {
-    background: #f7f7f7; /* Light gray background for the stats section */
-    border-radius: 10px;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow for the card */
     width: 80%;
-    padding: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .stats h2 {
-    font-size: 2rem;
-    margin-bottom: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2); /* Hover effect */
+}
+
+h1 {
     color: #333;
-  }
-  
-  .stats ul {
-    list-style-type: none;
-    padding-left: 0;
-  }
-  
-  .stats li {
-    font-size: 1.2rem;
-    padding: 8px 0;
-    border-bottom: 1px solid #e0e0e0;
-  }
-  
-  .stats li:last-child {
-    border-bottom: none;
-  }
-  
-  .stats li strong {
+    font-size: 2.2em;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+h2 {
+    color: #3e8e41;
+    margin-bottom: 10px;
+}
+
+h3 {
+    color: #4CAF50;
+    margin-bottom: 10px;
+}
+
+/* Spending Summary Table Styles */
+.spending-summary {
+    margin-top: 30px;
+}
+
+.spending-summary table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.spending-summary th, .spending-summary td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.spending-summary th {
+    background-color: #3e8e41;
+    color: white;
+}
+
+.spending-summary tr:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+
+.spending-summary tr:active {
+    background-color: #eaeaea;
+}
+
+.spending-summary td {
+    font-size: 1em;
+}
+
+.spending-summary td:first-child {
     font-weight: bold;
-  }
-  
-  /* Expense Summary Section */
-  .expense-summary {
-    background-color: #ffffff; /* White background for the expense summary */
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
-  }
-  
-  .expense-summary h3 {
-    font-size: 1.8rem;
-    color: #333;
-  }
-  
-  .expense-summary ul {
-    list-style-type: none;
-    padding-left: 0;
-  }
-  
-  .expense-summary li {
-    font-size: 1.1rem;
-    padding: 8px 0;
-    color: #555;
-  }
-  
-  .expense-summary li:last-child {
-    border-bottom: none;
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .home-page {
-      padding: 15px;
+}
+
+/* Expenses by Category Table */
+.expense-summary {
+    margin-top: 30px;
+}
+
+.expense-summary table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.expense-summary th, .expense-summary td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.expense-summary th {
+    background-color: #3e8e41;
+    color: white;
+}
+
+.expense-summary tr:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+
+.expense-summary tr:active {
+    background-color: #eaeaea;
+}
+
+.expense-summary td {
+    font-size: 1em;
+}
+
+.expense-summary td:first-child {
+    font-weight: bold;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .card {
+        width: 90%;
     }
-  
-    .stats {
-      width: 100%;
+    table {
+        font-size: 0.9em;
     }
-  
-    .stats h2 {
-      font-size: 1.8rem;
-    }
-  
     h1 {
-      font-size: 2rem;
+        font-size: 1.8em;
     }
-  }
-  
-  /* Animations */
-  @keyframes fadeIn {
-    0% {
-      opacity: 0;
-      transform: translateY(20px);
+    h2, h3 {
+        font-size: 1.4em;
     }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  .home-page {
-    animation: fadeIn 1s ease-out;
-  }
-  
+}

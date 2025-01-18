@@ -50,34 +50,67 @@ const Home = () => {
 
   return (
     <div className="home-page">
-      
-      <div className="stats">
-      <h1>Welcome, {firstName || localStorage.getItem('firstName') || 'Guest'}!</h1>
+      <div className="card">
+        <div className="stats">
+          <h1>Welcome, {firstName || localStorage.getItem('firstName') || 'Guest'}! Here's your financial snapshot!</h1>
 
-        <h2>Here's Your Financial Snapshot</h2>
-        <ul>
-          <li><strong>Yearly Spending:</strong> ${Number(stats.yearSpending || 0).toFixed(2)}</li>
-          <li><strong>Monthly Spending:</strong> ${Number(stats.monthSpending || 0).toFixed(2)}</li>
-          <li><strong>Weekly Spending:</strong> ${Number(stats.weekSpending || 0).toFixed(2)}</li>
-          <li><strong>Today's Spending:</strong> ${Number(stats.daySpending || 0).toFixed(2)}</li>
-          <li><strong>Top Categories:</strong> {stats.topCategories?.join(', ') || 'None'}</li>
-          <li><strong>Avg Daily Spending:</strong> ${Number(stats.dailyAverage || 0).toFixed(2)}</li>
-          <li><strong>Biggest Expense:</strong> ${Number(stats.biggestExpense || 0).toFixed(2)}</li>
-        </ul>
+          <div className="spending-summary">
+            <h3>Spending Summary</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Period</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Yearly</td>
+                  <td>${Number(stats.yearSpending || 0).toFixed(2)}</td>
+                </tr>
+                <tr>
+                  <td>Monthly</td>
+                  <td>${Number(stats.monthSpending || 0).toFixed(2)}</td>
+                </tr>
+                <tr>
+                  <td>Weekly</td>
+                  <td>${Number(stats.weekSpending || 0).toFixed(2)}</td>
+                </tr>
+                <tr>
+                  <td>Today's</td>
+                  <td>${Number(stats.daySpending || 0).toFixed(2)}</td>
+                </tr>
+                <tr>
+                  <td>Avg Daily</td>
+                  <td>${Number(stats.dailyAverage || 0).toFixed(2)}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-        <div className="expense-summary">
-          <h3>Expenses by Category</h3>
-          {stats.expenseByCategory && stats.expenseByCategory.length > 0 ? (
-            <ul>
-              {stats.expenseByCategory.map((category) => (
-                <li key={category.name}>
-                  {category.name}: ${category.amount.toFixed(2)}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>No data available.</p>
-          )}
+          <div className="expense-summary">
+            <h3>Expenses by Category</h3>
+            {stats.expenseByCategory && stats.expenseByCategory.length > 0 ? (
+              <table>
+                <thead>
+                  <tr>
+                    <th>Category</th>
+                    <th>Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {stats.expenseByCategory.map((category) => (
+                    <tr key={category.name}>
+                      <td>{category.name}</td>
+                      <td>${category.amount.toFixed(2)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p>No data available.</p>
+            )}
+          </div>
         </div>
       </div>
     </div>
