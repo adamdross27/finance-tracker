@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './EditExpense.css';
+import { getExpenseById, editExpense, deleteExpense } from '../../api/editExpense'; // Import API functions
 
 const EditExpense = () => {
   const [query, setQuery] = useState({ title: '', date: '' });
@@ -46,21 +47,35 @@ const EditExpense = () => {
   }, []);
 
   const handleSearch = async () => {
-    try {
-      const token = localStorage.getItem('token');
-      if (!token) throw new Error('User not authenticated.');
+    setLoading(true); // Show loading state
+  
+    const token = localStorage.getItem('token');
+    if (!token) throw new Error('User not authenticated.');
+  
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/expenses/search?title=${query.title}&date=${query.date}`, {
+      method: 'GET',
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const data = await response.json();
+  
+    setMatchingExpenses(data);
+    
+    // If no results are found, show alert and clear search fields
+    if (data.length === 0) {
+      let alertMessage = 'No results found';
+      
+      if (query.title && query.date) {
+        alertMessage = `No results found for expense "${query.title}" on ${formatDate(query.date)}`;
+      } else if (query.title) {
+        alertMessage = `No results found for expense "${query.title}"`;
+      } else if (query.date) {
+        alertMessage = `No results found for the date ${formatDate(query.date)}`;
+      }
 
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/expenses/search?title=${query.title}&date=${query.date}`, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
-      const data = await response.json();
-      setMatchingExpenses(data);
-    } catch (error) {
-      console.error("Error searching expenses:", error);
+      alert(alertMessage);
+      setQuery({ title: '', date: '' }); // Clear search fields
     }
+    setLoading(false);
   };
 
   const formatDate = (dateStr) => {
@@ -74,16 +89,34 @@ const EditExpense = () => {
   const handleSelectExpense = async (expenseId) => {
     try {
       setLoading(true);
-      const response = await fetch(`http://localhost:5001/api/expenses/${expenseId}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-      });
-      if (!response.ok) throw new Error('Failed to fetch expense details.');
-      const data = await response.json();
-      setSelectedExpense(data);
+      const token = localStorage.getItem('token');
+      const expenseData = await getExpenseById(expenseId, token);
+      if (expenseData.error) throw new Error(expenseData.error);
+      
+      setSelectedExpense(expenseData);
       setFormData({
-        ...data,
-        payment_method: data.payment_method || '',
+        ...expenseData,
+        payment_method: expenseData.payment_method || '',
       });
+      setError(null);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDeleteExpense = async (expenseId) => {
+    try {
+      setLoading(true);
+      const token = localStorage.getItem('token');
+      const result = await deleteExpense(expenseId, token);
+      if (result.error) throw new Error(result.error);
+      
+      alert('Expense deleted successfully!');
+      setMatchingExpenses(matchingExpenses.filter(exp => exp.expense_id !== expenseId));
+      setSelectedExpense(null);
+      setFormData({});
       setError(null);
     } catch (err) {
       setError(err.message);
@@ -101,16 +134,10 @@ const EditExpense = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      const response = await fetch(`http://localhost:5001/api/expenses/${selectedExpense.expense_id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) throw new Error('Failed to update expense.');
+      const token = localStorage.getItem('token');
+      const result = await editExpense(selectedExpense.expense_id, formData, token);
+      if (result.error) throw new Error(result.error);
+      
       alert('Expense updated successfully!');
       setSelectedExpense(null);
       setFormData({});
@@ -154,7 +181,10 @@ const EditExpense = () => {
           {matchingExpenses.map((expense) => (
             <li key={expense.expense_id}>
               {expense.title} - {formatDate(expense.date)} - ${expense.amount}
-              <button onClick={() => handleSelectExpense(expense.expense_id)}>Edit</button>
+              <div className="buttons">
+                <button className="edit-button" onClick={() => handleSelectExpense(expense.expense_id)}>Edit</button>
+                <button className="delete-button" onClick={() => handleDeleteExpense(expense.expense_id)}>Delete</button>
+              </div>
             </li>
           ))}
         </ul>

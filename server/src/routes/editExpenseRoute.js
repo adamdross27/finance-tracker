@@ -1,9 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const editExpenseController = require('../controllers/editExpenseController');
 const { authenticateToken } = require('../middleware/auth');
 const db = require('../utils/db');
-
 
 // Add `/search` to handle search requests
 router.get('/search', authenticateToken, async (req, res) => {
@@ -23,15 +21,11 @@ router.get('/search', authenticateToken, async (req, res) => {
       date || null, date,
     ]);
 
-    return res.status(200).json(rows);
+    return res.status(200).json(rows); // Send the result of the search
   } catch (error) {
     console.error('Error searching expenses:', error);
     return res.status(500).json({ error: 'Failed to search expenses.' });
   }
 });
-
-// Existing routes
-router.put('/:expenseId', authenticateToken, editExpenseController.editExpense);
-router.get('/:expenseId', authenticateToken, editExpenseController.getExpenseById);
 
 module.exports = router;

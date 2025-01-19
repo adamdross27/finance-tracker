@@ -56,17 +56,37 @@
   background-color: #f1f1f1;
 }
 
-.expense-list button {
-  padding: 5px 10px;
-  font-size: 12px;
-  background-color: #3498db;
-  color: white;
-  border: none;
-  border-radius: 4px;
+.expense-list .buttons {
+  display: flex;
+  gap: 10px;
 }
 
-.expense-list button:hover {
+.expense-list .edit-button,
+.expense-list .delete-button {
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none; /* Remove the border */
+  box-shadow: none; /* Remove any shadow */
+}
+
+.expense-list .edit-button {
+  background-color: #3498db;
+  color: white;
+}
+
+.expense-list .edit-button:hover {
   background-color: #2980b9;
+}
+
+.expense-list .delete-button {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.expense-list .delete-button:hover {
+  background-color: #c0392b;
 }
 
 .edit-form {

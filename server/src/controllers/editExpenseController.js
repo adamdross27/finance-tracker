@@ -4,7 +4,7 @@ const db = require('../utils/db');
 exports.editExpense = async (req, res) => {
   const expenseId = req.params.expenseId;
   const userId = req.user.id; // Authenticated user's ID
-  const { title, amount, description, category_id, date } = req.body;
+  const { title, amount, description, category_id, date, payment_method } = req.body;
 
   try {
     // Check if the expense exists and belongs to the user
@@ -18,8 +18,8 @@ exports.editExpense = async (req, res) => {
     }
 
     // Validate inputs
-    if (!title || !amount || !date || !category_id) {
-      return res.status(400).json({ error: 'Title, amount, date, and category are required.' });
+    if (!title || !amount || !date || !category_id || !payment_method) {
+      return res.status(400).json({ error: 'Title, amount, date, category, and payment method are required.' });
     }
 
     // Check if the category exists
@@ -28,13 +28,19 @@ exports.editExpense = async (req, res) => {
       return res.status(400).json({ error: 'Invalid category.' });
     }
 
+    // Check if the payment method exists
+    const [paymentMethodRows] = await db.execute('SELECT id FROM payment_method WHERE id = ?', [payment_method]);
+    if (paymentMethodRows.length === 0) {
+      return res.status(400).json({ error: 'Invalid payment method.' });
+    }
+
     // Update the expense
     const updateQuery = `
       UPDATE expense
-      SET title = ?, amount = ?, description = ?, category_id = ?, date = ?
+      SET title = ?, amount = ?, description = ?, category_id = ?, date = ?, payment_method = ?
       WHERE expense_id = ? AND user_id = ?
     `;
-    await db.execute(updateQuery, [title, amount, description || null, category_id, date, expenseId, userId]);
+    await db.execute(updateQuery, [title, amount, description || null, category_id, date, payment_method, expenseId, userId]);
 
     return res.status(200).json({ message: 'Expense updated successfully.' });
   } catch (error) {

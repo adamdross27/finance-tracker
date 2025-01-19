@@ -14,20 +14,22 @@ app.get('/', (req, res) => {
 // Import routes
 const authRoutes = require('./src/routes/auth');
 const userRoutes = require('./src/routes/userRoutes');
-const expenseRoutes = require('./src/routes/editExpenseRoute');
+const addExpenseRoutes = require('./src/routes/addExpenseRoute'); // Route for adding expenses
+const editExpenseRoutes = require('./src/routes/editExpenseRoute'); // Route for editing expenses
 const categoryRoutes = require('./src/routes/categoryRoutes');
 const paymentMethodRoutes = require('./src/routes/paymentMethodRoutes');
 const viewExpensesRoutes = require('./src/routes/viewExpensesRoute');
-const statsRoutes = require('./src/routes/statsRoutes'); // Add stats route
+const statsRoutes = require('./src/routes/statsRoutes');
 
 // Use the routes
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
-app.use('/api/expenses', expenseRoutes);
+app.use('/api/expenses', addExpenseRoutes); // Route for adding expense
+app.use('/api/expenses', editExpenseRoutes); // Route for searching and editing expenses
 app.use('/api/categories', categoryRoutes);
 app.use('/api', paymentMethodRoutes);
 app.use('/api', viewExpensesRoutes);
-app.use('/api', statsRoutes); // Add stats routes
+app.use('/api', statsRoutes);
 
 // Start server
 app.listen(5001, () => {
