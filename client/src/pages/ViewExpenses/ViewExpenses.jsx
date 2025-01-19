@@ -90,6 +90,9 @@ const ViewExpenses = () => {
     setEndDate(newEndDate.toISOString().split('T')[0]);
   };
 
+  // Calculate total amount
+  const totalAmount = expenses.reduce((total, expense) => total + parseFloat(expense.amount), 0).toFixed(2);
+
   return (
     <div className="view-expenses">
       <h2>View Expenses</h2>
@@ -127,30 +130,38 @@ const ViewExpenses = () => {
       ) : expenses.length === 0 ? (
         <p>No expenses found for the selected date range.</p>
       ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Title</th>
-              <th>Amount</th>
-              <th>Description</th>
-              <th>Category</th>
-              <th>Payment Method</th>
-            </tr>
-          </thead>
-          <tbody>
-            {expenses.map((expense) => (
-              <tr key={expense.expense_id}>
-                <td>{formatDate(expense.date)}</td>
-                <td>{expense.title}</td>
-                <td>${expense.amount}</td>
-                <td>{expense.description || 'N/A'}</td>
-                <td>{expense.category_name || 'Uncategorized'}</td>
-                <td>{expense.payment_method || 'N/A'}</td>
+        <>
+          {/* Display total amount */}
+
+          
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Title</th>
+                <th>Amount</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Payment Method</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {expenses.map((expense) => (
+                <tr key={expense.expense_id}>
+                  <td>{formatDate(expense.date)}</td>
+                  <td>{expense.title}</td>
+                  <td>${expense.amount}</td>
+                  <td>{expense.description || 'N/A'}</td>
+                  <td>{expense.category_name || 'Uncategorized'}</td>
+                  <td>{expense.payment_method || 'N/A'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <div className="total-amount">
+            <h3>Total Amount: ${totalAmount}</h3>
+          </div>
+        </>
       )}
     </div>
   );

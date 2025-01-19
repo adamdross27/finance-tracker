@@ -100,3 +100,17 @@
     text-align: center;
   }
   
+  /* Total amount display styles */
+.total-amount {
+  margin-top: 20px;
+  background-color: #4CAF50; /* Green background */
+  color: white;
+  padding: 10px;
+  text-align: center;
+  font-size: 1.2em;
+  border-radius: 5px;
+
+  h3 {
+    color: white;
+  }
+}
